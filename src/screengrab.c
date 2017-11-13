@@ -82,6 +82,7 @@ MMBitmapRef copyMMBitmapFromDisplayInRect(MMRect rect)
 	return bitmap;
 #elif defined(IS_WINDOWS)
 	MMBitmapRef bitmap;
+	MMBitmapRef bitmapRGB;
 	void *data;
 	HDC screen = NULL, screenMem = NULL;
 	HBITMAP dib;
@@ -138,12 +139,14 @@ MMBitmapRef copyMMBitmapFromDisplayInRect(MMRect rect)
 	if (bitmap != NULL) {
 		bitmap->imageBuffer = malloc(bitmap->bytewidth * bitmap->height);
 		memcpy(bitmap->imageBuffer, data, bitmap->bytewidth * bitmap->height);
+		bitmapRGB = ConvertBMPToRGBBuffer(bitmap);
 	}
 
 	ReleaseDC(NULL, screen);
 	DeleteObject(dib);
 	DeleteDC(screenMem);
-
-	return bitmap;
+	destroyMMBitmap(bitmap);
+	
+	return bitmapRGB;
 #endif
 }

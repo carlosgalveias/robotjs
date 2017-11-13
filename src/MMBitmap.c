@@ -22,6 +22,50 @@ MMBitmapRef createMMBitmap(uint8_t *buffer,
 	return bitmap;
 }
 
+
+MMBitmapRef ConvertBMPToRGBBuffer (MMBitmapRef bitmap)
+{
+
+	assert(bitmap != NULL);
+	uint8_t *rgbBitmap = NULL;
+
+	if (bitmap->imageBuffer != NULL) {
+		const size_t bufsize = bitmap->height * bitmap->bytewidth;
+		rgbBitmap = malloc(bufsize);
+		if (rgbBitmap == NULL) return NULL;
+		memcpy(rgbBitmap, bitmap->imageBuffer, bufsize);
+	}
+
+	// find the number of padding bytes
+	int padding = 0;
+	int scanlinebytes = bitmap->bytewidth;
+	while ( ( scanlinebytes + padding ) % bitmap->bytewidth != 0 )     // DWORD = 4 bytes
+		padding++;
+	// get the padded scanline bitmap->bytewidth
+	int psw = scanlinebytes + padding;
+	
+	// now we loop trough all bytes of the original buffer, 
+	// swap the R and B bytes and the scanlines
+	long bufpos = 0;   
+	long newpos = 0;
+	for ( int y = 0; y < bitmap->height; y++ )
+		for ( int x = 0; x < bitmap->bytesPerPixel * bitmap->width; x+=bitmap->bytesPerPixel )
+		{
+			newpos = y * bitmap->bytesPerPixel * bitmap->width + x;     
+			//bufpos = ( bitmap->height - y - 1 ) * psw + x;
+			rgbBitmap[newpos] = bitmap->imageBuffer[newpos + 2];       
+			rgbBitmap[newpos + 2] = bitmap->imageBuffer[newpos];     
+		}
+
+	return createMMBitmap(rgbBitmap,
+	                      bitmap->width,
+	                      bitmap->height,
+	                      bitmap->bytewidth,
+	                      bitmap->bitsPerPixel,
+	                      bitmap->bytesPerPixel);
+}
+
+
 void destroyMMBitmap(MMBitmapRef bitmap)
 {
 	assert(bitmap != NULL);

@@ -22,6 +22,7 @@ struct _MMBitmap {
 	uint8_t bytesPerPixel; /* For convenience; should be bitsPerPixel / 8. */
 };
 
+
 typedef struct _MMBitmap MMBitmap;
 typedef MMBitmap *MMBitmapRef;
 
@@ -30,6 +31,8 @@ typedef MMBitmap *MMBitmapRef;
 MMBitmapRef createMMBitmap(uint8_t *buffer, size_t width, size_t height,
                            size_t bytewidth, uint8_t bitsPerPixel,
 						   uint8_t bytesPerPixel);
+/* Converts a BRG to RGB Buffer */
+MMBitmapRef ConvertBMPToRGBBuffer ( MMBitmapRef bitmap );
 
 /* Releases memory occupied by MMBitmap. */
 void destroyMMBitmap(MMBitmapRef bitmap);
