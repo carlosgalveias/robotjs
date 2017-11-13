@@ -56,7 +56,8 @@ MMBitmapRef ConvertBMPToRGBBuffer (MMBitmapRef bitmap)
 			rgbBitmap[newpos] = bitmap->imageBuffer[newpos + 2];       
 			rgbBitmap[newpos + 2] = bitmap->imageBuffer[newpos];     
 		}
-
+		
+	// Do not forget to destroy the original bitmap if you dont need it to avoid memory leaks
 	return createMMBitmap(rgbBitmap,
 	                      bitmap->width,
 	                      bitmap->height,
