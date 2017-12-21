@@ -97,10 +97,10 @@ void win32KeyEvent(int key, MMKeyFlags flags)
 		}
 	}
 
-	/* Set the scan code for keyup */
+	/* Set the scan code for keyup THIS SCAN CODE IS FOR F17??!
 	if ( flags & KEYEVENTF_KEYUP ) {
 		scan |= 0x80;
-	}
+	}*/
 
 	keybd_event(key, scan, flags, 0);
 }
