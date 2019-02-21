@@ -76,9 +76,15 @@ void typeText(const char *str)
 
 void typeTextDelayed(char *str, size_t milliseconds)
 {
+	/* Characters per second */
+	const long long cps = (double)milliseconds / 60;
+
+	/* Average milli-seconds per character */
+	const long long mspc = (cps == 0) ? 0 : 1000 / cps;
+    
     for (char16_t c16 : convertString(str))
     {
         typeChar(c16);
-        std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+        std::this_thread::sleep_for(std::chrono::microseconds(mspc));
     }
 }
