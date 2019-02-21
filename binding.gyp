@@ -53,6 +53,7 @@
     
     'sources': [
       'src/robotjs.cc',
+      'src/universal_key_typer.cpp',
       'src/deadbeef_rand.c',
       'src/mouse.c',
       'src/keypress.c',

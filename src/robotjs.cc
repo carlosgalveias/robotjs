@@ -10,9 +10,12 @@
 #include "MMBitmap.h"
 #include "snprintf.h"
 #include "microsleep.h"
+#include "os.h"
 #if defined(USE_X11)
 	#include "xdisplay.h"
 #endif
+
+#include "universal_key_typer.h"
 
 using namespace v8;
 
@@ -574,7 +577,12 @@ NAN_METHOD(typeString)
 
 	str = *string;
 
-	typeString(str);
+	#if defined(IS_WINDOWS)
+		printf("Windows Defined");
+		typeText(str);
+	#else
+		typeString(str);
+	#endif
 
 	info.GetReturnValue().Set(Nan::New(1));
 }
@@ -588,7 +596,12 @@ NAN_METHOD(typeStringDelayed)
 
 	size_t cpm = info[1]->Int32Value();
 
-	typeStringDelayed(str, cpm);
+	#if defined(IS_WINDOWS)
+		printf("Windows Defined");
+		typeTextDelayed(str, cpm);
+	#else
+		typeStringDelayed(str, cpm);
+	#endif
 
 	info.GetReturnValue().Set(Nan::New(1));
 }
