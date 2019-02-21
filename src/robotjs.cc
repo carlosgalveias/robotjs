@@ -578,7 +578,6 @@ NAN_METHOD(typeString)
 	str = *string;
 
 	#if defined(IS_WINDOWS)
-		printf("Windows Defined");
 		typeText(str);
 	#else
 		typeString(str);
@@ -597,7 +596,6 @@ NAN_METHOD(typeStringDelayed)
 	size_t cpm = info[1]->Int32Value();
 
 	#if defined(IS_WINDOWS)
-		printf("Windows Defined");
 		typeTextDelayed(str, cpm);
 	#else
 		typeStringDelayed(str, cpm);
