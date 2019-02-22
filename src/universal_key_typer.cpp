@@ -74,17 +74,17 @@ void typeText(const char *str)
         typeChar(c16);
 }
 
-void typeTextDelayed(char *str, size_t milliseconds)
+void typeTextDelayed(char *str, size_t cpm)
 {
 	/* Characters per second */
-	const long long cps = (double)milliseconds / 60;
+	const double cps = (double)cpm / 60.0;
 
 	/* Average milli-seconds per character */
-	const long long mspc = (cps == 0) ? 0 : 1000 / cps;
+	const long long mspc = (long)((cps == 0.0) ? 0.0 : 1000.0 / cps);
     
     for (char16_t c16 : convertString(str))
     {
         typeChar(c16);
-        std::this_thread::sleep_for(std::chrono::microseconds(mspc));
+        std::this_thread::sleep_for(std::chrono::milliseconds(mspc));
     }
 }
