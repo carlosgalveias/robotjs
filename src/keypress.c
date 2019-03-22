@@ -98,9 +98,12 @@ void win32KeyEvent(int key, MMKeyFlags flags)
 	}
 
 	/* Set the scan code for keyup */
+	/*
+	DISABLED THIS AS CAUSES PROBLEMS IN WINDOWS - CARLOS GALVEIAS
 	if ( flags & KEYEVENTF_KEYUP ) {
 		scan |= 0x80;
 	}
+	*/
 
 	keybd_event(key, scan, flags, 0);
 }
